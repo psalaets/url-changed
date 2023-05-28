@@ -1,0 +1,30 @@
+{
+  "name": "url-changed",
+  "version": "0.9.0",
+  "description": "Url change detection for when Navigation API is not supported",
+  "type": "module",
+  "source": "./index.js",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "files": ["dist"],
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "homepage": "https://github.com/psalaets/url-changed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psalaets/url-changed.git"
+  },
+  "keywords": ["url", "location", "change", "navigation", "navigate", "event", "watch"],
+  "author": "psalaets",
+  "license": "MIT",
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  }
+}
