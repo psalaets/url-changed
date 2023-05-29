@@ -1,18 +1,20 @@
 /**
- * @typedef Options
- * @property native {boolean?}
+ * @typedef Settings
  * @property bodyMutation {boolean?}
  * @property popstate {boolean?}
  * @property hashchange {boolean?}
  * @property poll {number?}
+ * @property forceFallbacks {boolean?}
  */
 
 /**
  * @param cb {(newUrl: string, oldUrl: string) => void}
- * @param options {Options}
+ * @param settings {Settings}
  * @return {() => void} Stops listening for url changes when called.
  */
-export function urlChanged(cb, options = {}) {
+export function urlChanged(cb, settings) {
+  validate(settings);
+
   let oldUrl = document.location.toString();
 
   /**
@@ -34,13 +36,13 @@ export function urlChanged(cb, options = {}) {
 
   // Navigation API
   const supportsNavigationApi = typeof navigation != 'undefined';
-  if (supportsNavigationApi) {
+  if (supportsNavigationApi && !settings.forceFallbacks) {
     navigation.addEventListener('navigate', checkForChange);
 
     cleanUps.push(() => navigation.removeEventListener('navigate', checkForChange));
   } else {
     // body mutations - idea from https://stackoverflow.com/a/46428962/1865262
-    if (options.bodyMutation) {
+    if (settings.bodyMutation) {
       const mutationObserver = new MutationObserver(checkForChange);
       mutationObserver.observe(document.body, {
         childList: true,
@@ -51,26 +53,43 @@ export function urlChanged(cb, options = {}) {
     }
 
     // hashchange
-    if (options.hashchange) {
+    if (settings.hashchange) {
       window.addEventListener('hashchange', checkForChange);
 
       cleanUps.push(() => window.removeEventListener('hashchange', checkForChange));
     }
 
     // popstate
-    if (!supportsNavigationApi && options.popstate) {
+    if (settings.popstate) {
       window.addEventListener('popstate', checkForChange);
 
       cleanUps.push(() => window.removeEventListener('popstate', checkForChange));
     }
 
     // polling
-    if (options.poll) {
-      const intervalId = setInterval(checkForChange, options.poll);
+    if (settings.poll) {
+      const intervalId = setInterval(checkForChange, settings.poll);
 
       cleanUps.push(() => clearInterval(intervalId));
     }
   }
 
   return () => cleanUps.forEach(fn => fn());
+}
+
+/**
+ * @param {Settings} settings
+ */
+function validate(settings) {
+  if (!settings) {
+    throw new Error(`settings are required`);
+  }
+
+  if (settings.poll != null && settings.poll <= 0) {
+    throw new Error(`poll must be > 0 when specified`);
+  }
+
+  if (!settings.bodyMutation && !settings.hashchange && !settings.popstate && settings.poll == null) {
+    throw new Error(`At least one fallback must be specified`);
+  }
 }

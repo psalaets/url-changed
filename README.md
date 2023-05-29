@@ -11,21 +11,21 @@ Url change detection for when [Navigation API](https://developer.mozilla.org/en-
 ```js
 import { urlChanged } from 'url-changed';
 
-const options = {
+const settings = {
   // see below
 };
 
 const stopWatching = urlChanged(
   (newUrl, oldUrl) => console.log(`${oldUrl} -> ${newUrl}`),
-  options
+  settings
 );
 ```
 
-### Options
+### Settings
 
 The [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is used if available. Otherwise one or more fallbacks can be used to achieve a similar effect.
 
-The optional 2nd parameter to `urlChanged` specifies which fallbacks to enable. All fallbacks are disabled by default so you should enable at least one.
+The 2nd parameter to `urlChanged` specifies which fallbacks to enable. All fallbacks are disabled by default so you must enable at least one.
 
 #### Body mutation
 
@@ -37,7 +37,7 @@ urlChanged(fn, {
 });
 ```
 
-#### `hashchange` event
+#### `hashchange`
 
 When [hashchange](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) event fires on `window`, check if the url has changed.
 
@@ -47,7 +47,7 @@ urlChanged(fn, {
 });
 ```
 
-#### `popstate` event
+#### `popstate`
 
 When [popstate](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event) event fires on `window`, check if the url has changed.
 
@@ -65,6 +65,19 @@ Every x milliseconds, check if the url has changed.
 urlChanged(fn, {
   // milliseconds
   poll: 100
+});
+```
+
+#### Override Navigation API
+
+Use fallbacks regardless of Navigation API existence. Use this to test fallback behavior.
+
+```js
+urlChanged(fn, {
+  forceFallbacks: true,
+
+  // Must enable at least one fallback
+  bodyMutation: true
 });
 ```
 
