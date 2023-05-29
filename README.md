@@ -23,7 +23,7 @@ const stopWatching = urlChanged(
 
 ### Settings
 
-The [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is used if available. Otherwise one or more fallbacks can be used to achieve a similar effect.
+The [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is used if available. Otherwise one or more fallbacks are used to achieve a similar effect.
 
 The 2nd parameter to `urlChanged` specifies which fallbacks to enable. All fallbacks are disabled by default so you must enable at least one.
 
