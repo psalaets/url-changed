@@ -19,7 +19,7 @@
     "build": "microbundle",
     "dev": "microbundle watch",
     "preship": "rm -rf dist && npm run build",
-    "ship": "np"
+    "ship": "np --no-tests"
   },
   "homepage": "https://github.com/psalaets/url-changed",
   "repository": {
