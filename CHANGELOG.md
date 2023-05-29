@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.0.0] - 2023-05-28
+
+### Fixed
+
+- JsDoc type declarations
+
 ## [3.0.0] - 2023-05-28
 
 ### Breaking

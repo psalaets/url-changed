@@ -1,16 +1,16 @@
 /**
- * @typedef Settings
- * @property bodyMutation {boolean?}
- * @property popstate {boolean?}
- * @property hashchange {boolean?}
- * @property poll {number?}
- * @property forceFallbacks {boolean?}
+ * @typedef {Object} Settings
+ * @property {boolean} [bodyMutation]
+ * @property {boolean} [popstate]
+ * @property {boolean} [hashchange]
+ * @property {number} [poll]
+ * @property {boolean} [forceFallbacks]
  */
 
 /**
- * @param cb {(newUrl: string, oldUrl: string) => void}
- * @param settings {Settings}
- * @return {() => void} Stops listening for url changes when called.
+ * @param {(newUrl: string, oldUrl: string) => void} cb
+ * @param {Settings} settings
+ * @return {() => void} Function to stop listening for url changes.
  */
 export function urlChanged(cb, settings) {
   validate(settings);
@@ -30,7 +30,7 @@ export function urlChanged(cb, settings) {
   };
 
   /**
-   * @type Array<() => void>
+   * @type {Array<() => void>}
    */
   const cleanUps = [];
 
