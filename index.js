@@ -2,10 +2,9 @@
  * @typedef Options
  * @property native {boolean?}
  * @property bodyMutation {boolean?}
- * @property poll {number?}
- * @property click {boolean?}
  * @property popstate {boolean?}
  * @property hashchange {boolean?}
+ * @property poll {number?}
  */
 
 /**
@@ -51,20 +50,6 @@ export function urlChanged(cb, options = {}) {
       cleanUps.push(() => mutationObserver.disconnect());
     }
 
-    // polling
-    if (options.poll) {
-      const intervalId = setInterval(checkForChange, options.poll);
-
-      cleanUps.push(() => clearInterval(intervalId));
-    }
-
-    // click
-    if (options.click) {
-      document.addEventListener('click', checkForChange);
-
-      cleanUps.push(() => document.removeEventListener('click', checkForChange));
-    }
-
     // hashchange
     if (options.hashchange) {
       window.addEventListener('hashchange', checkForChange);
@@ -77,6 +62,13 @@ export function urlChanged(cb, options = {}) {
       window.addEventListener('popstate', checkForChange);
 
       cleanUps.push(() => window.removeEventListener('popstate', checkForChange));
+    }
+
+    // polling
+    if (options.poll) {
+      const intervalId = setInterval(checkForChange, options.poll);
+
+      cleanUps.push(() => clearInterval(intervalId));
     }
   }
 

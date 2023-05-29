@@ -57,16 +57,6 @@ urlChanged(fn, {
 });
 ```
 
-#### `click` event
-
-When `click` event fires on `document`, check if the url has changed.
-
-```js
-urlChanged(fn, {
-  click: true
-});
-```
-
 #### Polling
 
 Every x milliseconds, check if the url has changed.
