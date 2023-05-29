@@ -39,7 +39,7 @@ urlChanged(fn, {
 
 #### `hashchange`
 
-When [hashchange](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) event fires on `window`, check if the url has changed.
+When [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) fires on `window`, check if the url has changed.
 
 ```js
 urlChanged(fn, {
@@ -49,7 +49,7 @@ urlChanged(fn, {
 
 #### `popstate`
 
-When [popstate](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event) event fires on `window`, check if the url has changed.
+When [popstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event) fires on `window`, check if the url has changed.
 
 ```js
 urlChanged(fn, {
@@ -59,7 +59,7 @@ urlChanged(fn, {
 
 #### Polling
 
-Every x milliseconds, check if the url has changed.
+Every x milliseconds, check if the url has changed. This is relatively brute force.
 
 ```js
 urlChanged(fn, {
