@@ -68,7 +68,7 @@ urlChanged(fn, {
 });
 ```
 
-#### Override Navigation API
+#### Ignore Navigation API
 
 Use fallbacks regardless of Navigation API existence. Use this to test fallback behavior.
 
