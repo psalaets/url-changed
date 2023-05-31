@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "microbundle",
+    "build": "microbundle --sourcemap false --compress false",
     "dev": "microbundle watch",
     "preship": "rm -rf dist && npm run build",
     "ship": "np --no-tests"
