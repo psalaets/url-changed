@@ -63,7 +63,7 @@ Every x milliseconds, check if the url has changed. This is relatively brute for
 
 ```js
 urlChanged(fn, {
-  // milliseconds
+  // milliseconds, must be > 0
   poll: 100
 });
 ```
