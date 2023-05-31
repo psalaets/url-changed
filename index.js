@@ -15,15 +15,15 @@
 export function urlChanged(cb, settings) {
   validate(settings);
 
-  let oldUrl = document.location.toString();
+  let oldUrl = document.location.href;
 
   /**
    * @type {() => void}
    */
   const checkForChange = () => {
-    const newUrl = document.location.toString();
+    const newUrl = document.location.href;
 
-    if (newUrl !== oldUrl) {
+    if (newUrl != oldUrl) {
       cb(newUrl, oldUrl);
       oldUrl = newUrl;
     }
@@ -32,14 +32,14 @@ export function urlChanged(cb, settings) {
   /**
    * @type {Array<() => void>}
    */
-  const cleanUps = [];
+  const tearDowns = [];
 
   // Navigation API
   const supportsNavigationApi = typeof navigation != 'undefined';
   if (supportsNavigationApi && !settings.forceFallbacks) {
     navigation.addEventListener('navigate', checkForChange);
 
-    cleanUps.push(() => navigation.removeEventListener('navigate', checkForChange));
+    tearDowns.push(() => navigation.removeEventListener('navigate', checkForChange));
   } else {
     // body mutations - idea from https://stackoverflow.com/a/46428962/1865262
     if (settings.bodyMutation) {
@@ -49,47 +49,43 @@ export function urlChanged(cb, settings) {
         subtree: true
       });
 
-      cleanUps.push(() => mutationObserver.disconnect());
+      tearDowns.push(() => mutationObserver.disconnect());
     }
 
     // hashchange
     if (settings.hashchange) {
       window.addEventListener('hashchange', checkForChange);
 
-      cleanUps.push(() => window.removeEventListener('hashchange', checkForChange));
+      tearDowns.push(() => window.removeEventListener('hashchange', checkForChange));
     }
 
     // popstate
     if (settings.popstate) {
       window.addEventListener('popstate', checkForChange);
 
-      cleanUps.push(() => window.removeEventListener('popstate', checkForChange));
+      tearDowns.push(() => window.removeEventListener('popstate', checkForChange));
     }
 
     // polling
     if (settings.poll) {
       const intervalId = setInterval(checkForChange, settings.poll);
 
-      cleanUps.push(() => clearInterval(intervalId));
+      tearDowns.push(() => clearInterval(intervalId));
     }
   }
 
-  return () => cleanUps.forEach(fn => fn());
+  return () => tearDowns.forEach(fn => fn());
 }
 
 /**
  * @param {Settings} settings
  */
-function validate(settings) {
-  if (!settings) {
-    throw new Error(`settings are required`);
-  }
-
+function validate(settings = {}) {
   if (settings.poll != null && settings.poll <= 0) {
-    throw new Error(`poll must be > 0 when specified`);
+    throw new Error(`poll must be > 0`);
   }
 
-  if (!settings.bodyMutation && !settings.hashchange && !settings.popstate && settings.poll == null) {
-    throw new Error(`At least one fallback must be specified`);
+  if (!settings.bodyMutation && !settings.hashchange && !settings.popstate && !settings.poll) {
+    throw new Error(`At least one fallback must be enabled`);
   }
 }
