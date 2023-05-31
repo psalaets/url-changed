@@ -37,7 +37,7 @@ urlChanged(fn, {
 });
 ```
 
-#### `hashchange`
+#### hashchange
 
 When [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) fires on `window`, check if the url has changed.
 
@@ -47,7 +47,7 @@ urlChanged(fn, {
 });
 ```
 
-#### `popstate`
+#### popstate
 
 When [popstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event) fires on `window`, check if the url has changed.
 
