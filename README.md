@@ -1,6 +1,6 @@
 # url-changed
 
-Url change detection for when [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is not supported.
+URL change detection for when [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is not supported.
 
 ## Install
 
@@ -23,9 +23,9 @@ const stopWatching = urlChanged(
 
 ### Settings
 
-The [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is used if available. Otherwise one or more fallbacks are used to achieve a similar effect.
+If the [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) is available, it is used exclusively for URL change detection. Otherwise one or more fallbacks are used to achieve a similar effect.
 
-The 2nd parameter to `urlChanged` specifies which fallbacks to enable. All fallbacks are disabled by default so you must enable at least one.
+The 2nd parameter to `urlChanged` specifies which fallbacks to enable. All fallbacks are disabled by default but **at least one fallback must be enabled**.
 
 #### Body mutation
 

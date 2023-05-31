@@ -1,7 +1,7 @@
 {
   "name": "url-changed",
   "version": "4.0.0",
-  "description": "Url change detection for when Navigation API is not supported",
+  "description": "URL change detection for when Navigation API is not supported",
   "type": "module",
   "source": "./index.js",
   "exports": {
