@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.1.0] - 2023-05-31
+
+### Changed
+
+- Slightly smaller bundle size.
+
 ## [4.0.0] - 2023-05-28
 
 ### Fixed
